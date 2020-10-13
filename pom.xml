@@ -17,7 +17,6 @@
     <!-- 子模块  -->
     <modules>
         <module>demo-sso</module>
-        <module>demo-web</module>
     </modules>
 
     <properties>

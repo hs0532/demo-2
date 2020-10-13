@@ -28,22 +28,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .anyRequest().authenticated()
-//                .and()
-//                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-//                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-//                .formLogin()
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll()
-//             .and()
-//        // 不需要session
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.cors().and().csrf().disable()
+        http.formLogin() //设置表单登录
+                .loginPage("/login")//设置登录跳转页面controller、也可以直接跳转页面
+                .loginProcessingUrl("/authentication/form") //自定义登录页面的表单提交地址
+                .and()
+                .authorizeRequests()
+                .antMatchers("/login","/register","*/css/**","/code/image","/logout","/code/sms").permitAll()//过滤不需要拦截认证的资源
+                .anyRequest()
+                .authenticated()
+                .and()
+                .csrf().disable();
+
+        http.logout().permitAll()
+                .logoutUrl("/logout")//注销
+                .logoutSuccessUrl("/login");//注销成功后跳转的页面
+
+     /* http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.DELETE, "/demo/**").hasRole("ADMIN")
                 // 测试用资源，需要验证了的用户才能访问
@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 // 不需要session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
     }
 
     @Override

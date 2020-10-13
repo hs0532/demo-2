@@ -16,6 +16,11 @@ public class TestEndpoints {
         return "product id : " + id;
     }
 
+    @GetMapping("/user")
+    public Authentication user(Authentication user){
+        return user;
+    }
+
     @GetMapping("/order/{id}")
     public String getOrder(@PathVariable String id) {
         //for debug
