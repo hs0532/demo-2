@@ -57,13 +57,14 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
         @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().
-                withClient("clinet1")//客户端ID
-                .secret("secret1")//客户端密码
+                withClient("ccc")//客户端ID
+                .secret("{noop}123456")//客户端密码
                 .authorizedGrantTypes("authorization_code","refresh_token")//认证方式 授权码认证模式
                 .scopes("all")
+                .autoApprove(true)
                 .and()
-                .withClient("clinet2")
-                .secret("clinet2")
+                .withClient("bbb")
+                .secret("{noop}123456")
                 .authorizedGrantTypes("authorization_code","refresh_token")
                 .scopes("all");
         /**
