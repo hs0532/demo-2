@@ -1,16 +1,19 @@
 package com.haoshuang.sso.demosso.config.ValidateCode;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
+/**
+ * 图片验证码
+ */
 @Data
-public class ImageCode {
+@EqualsAndHashCode(callSuper = false)
+public class ImageCode extends ValidateCode{
 
     private BufferedImage image;
-    private String code;
-    private LocalDateTime expireTime; // 过期时间
 
     /**
      * @param image
@@ -18,13 +21,13 @@ public class ImageCode {
      * @param expireIn 过期时间，单位秒
      */
     public ImageCode(BufferedImage image, String code, int expireIn) {
+        super(code,expireIn);
         this.image = image;
-        this.code = code;
-        this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }
 
-    // 是否过期
-    public boolean isExpried() {
-        return this.expireTime.isBefore(LocalDateTime.now());
+    public ImageCode(BufferedImage image,String code,LocalDateTime exprieTime){
+        super(code,exprieTime);
+        this.image = image;
     }
+
 }

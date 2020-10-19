@@ -3,6 +3,9 @@ package com.haoshuang.sso.demosso.config.ValidateCode;
 
 import com.haoshuang.sso.demosso.config.MyFailAuthenticationFailHandler;
 import com.haoshuang.sso.demosso.config.ValidateCode.ValidateCodeException.ValidateCodeException;
+import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.AbstractValidateCodeProcessor;
+import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.ValidateCodeProcessor;
+import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.ValidateCodeType;
 import com.haoshuang.sso.demosso.controller.ValidateCodeController;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -20,6 +24,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 图片验证码验证过滤器
@@ -32,15 +39,42 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     @Autowired
     private MyFailAuthenticationFailHandler failureHandler;
 
-    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+    @Autowired
+    ValidateCodeProcessorHolder validateCodeProcessorHolder;
+
+    @Autowired
+    private SecurityProperties securityProperties;
+
+    private AntPathMatcher pathMatcher = new AntPathMatcher();
+    private Map<String,ValidateCodeType> urlMap = new HashMap<>();
+
+    @Override
+    public void afterPropertiesSet() throws ServletException {
+        super.afterPropertiesSet();
+        /**
+         * 此处地址可又配置文件读取
+         */
+        urlMap.put("/authentication/form",ValidateCodeType.IMAGE);
+        addUrlToMap(securityProperties.getCode().getImage().getUrl(),ValidateCodeType.IMAGE);
+    }
+
+    protected  void addUrlToMap(String urlString,ValidateCodeType type){
+        if(StringUtils.isNotBlank(urlString)){
+            String[] strings = StringUtils.splitByWholeSeparatorPreserveAllTokens(urlString,",");
+            for (String url: strings) {
+                urlMap.put(url,type);
+            }
+        }
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        ValidateCodeType type =getValidateCodeType(request);
         // 为登录请求，并且为post请求【即登录请求时，先验证图片验证码】
-        if (StringUtils.equals("/authentication/form", request.getRequestURI())
-                && StringUtils.equalsAnyIgnoreCase(request.getMethod(), "post")) {
+        if (null != type){
             try {
-                validate(request);//验证
+                ValidateCodeProcessor validateCodeProcessor = validateCodeProcessorHolder.findValidateCodeProcessor(type);
+                validateCodeProcessor.validate(new ServletWebRequest(request,response));//验证
             } catch (ValidateCodeException e) {
                 failureHandler.onAuthenticationFailure(request, response, e);
                 return;
@@ -48,28 +82,24 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-    private void validate(HttpServletRequest request) throws ServletRequestBindingException {
-        // 拿到之前存储的imageCode信息
-        ServletWebRequest swr = new ServletWebRequest(request);
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(swr, ValidateCodeController.SESSION_KEY);
-        // 又是一个spring中的工具类，
-        // 试问一下，如果不看源码怎么可能知道有这些工具类可用？
-        String codeInRequest = ServletRequestUtils.getStringParameter(request, "imageCode");
-        if (StringUtils.isBlank(codeInRequest)) {
-            throw new ValidateCodeException("验证码的值不能为空");
+
+    /**
+     * 获取当前请求的验证码类型
+     * @param request
+     * @return
+     */
+    private ValidateCodeType getValidateCodeType(HttpServletRequest request){
+        ValidateCodeType type = null;
+        if(StringUtils.endsWithIgnoreCase(request.getMethod(),"post")){
+            Set<String> urls = urlMap.keySet();
+            for (String url:urls){
+                if(pathMatcher.match(url,request.getRequestURI())){
+                    type = urlMap.get(url);
+                }
+            }
         }
-        if (codeInSession == null) {
-            throw new ValidateCodeException("验证码不存在");
-        }
-        if (codeInSession.isExpried()) {
-            sessionStrategy.removeAttribute(swr, ValidateCodeController.SESSION_KEY);
-            throw new ValidateCodeException("验证码已过期");
-        }
-        if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
-            throw new ValidateCodeException("验证码不匹配");
-        }
-        //移除验证码
-        sessionStrategy.removeAttribute(swr, ValidateCodeController.SESSION_KEY);
+        return type;
     }
+
 
 }
