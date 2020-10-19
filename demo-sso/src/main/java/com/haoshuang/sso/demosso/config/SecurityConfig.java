@@ -1,5 +1,6 @@
 package com.haoshuang.sso.demosso.config;
 
+import com.haoshuang.sso.demosso.config.ValidateCode.ValidateCodeFilter;
 import com.haoshuang.sso.demosso.config.filter.JWTAuthenticationFilter;
 import com.haoshuang.sso.demosso.config.filter.JWTAuthorizationFilter;
 import com.haoshuang.sso.demosso.service.MyCusUserServiceDetail;
@@ -13,10 +14,20 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private MyFailAuthenticationFailHandler myFailAuthenticationFailHandler;
+
+    @Autowired
+    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
 
     @Autowired
     MyCusUserServiceDetail userServiceDetail;
@@ -28,9 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin() //设置表单登录
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin() //设置表单登录
                 .loginPage("/login")//设置登录跳转页面controller、也可以直接跳转页面
                 .loginProcessingUrl("/authentication/form") //自定义登录页面的表单提交地址
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myFailAuthenticationFailHandler)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login","/register","*/css/**","/code/image","/logout","/code/sms").permitAll()//过滤不需要拦截认证的资源

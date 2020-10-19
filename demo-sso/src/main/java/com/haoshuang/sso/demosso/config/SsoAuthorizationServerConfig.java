@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -23,6 +24,9 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    private RedisTokenStore redisTokenStore;
 
 
 
@@ -56,7 +60,7 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
         @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().
+      /*  clients.inMemory().
                 withClient("ccc")//客户端ID
                 .secret("{noop}123456")//客户端密码
                 .authorizedGrantTypes("authorization_code","refresh_token")//认证方式 授权码认证模式
@@ -66,11 +70,10 @@ public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerA
                 .withClient("bbb")
                 .secret("{noop}123456")
                 .authorizedGrantTypes("authorization_code","refresh_token")
-                .scopes("all");
-        /**
+                .scopes("all");*/
+
         //数据库存储客户端信息
          clients.withClientDetails(clientDetails());
-         */
 
     }
 
