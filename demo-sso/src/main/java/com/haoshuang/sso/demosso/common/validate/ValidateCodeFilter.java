@@ -1,21 +1,14 @@
-package com.haoshuang.sso.demosso.config.ValidateCode;
+package com.haoshuang.sso.demosso.common.validate;
 
 
+import com.haoshuang.sso.demosso.common.validate.ValidateCodeException.ValidateCodeException;
 import com.haoshuang.sso.demosso.config.MyFailAuthenticationFailHandler;
-import com.haoshuang.sso.demosso.config.ValidateCode.ValidateCodeException.ValidateCodeException;
-import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.AbstractValidateCodeProcessor;
-import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.ValidateCodeProcessor;
-import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.ValidateCodeType;
-import com.haoshuang.sso.demosso.controller.ValidateCodeController;
+import com.haoshuang.sso.demosso.common.validate.validateInterface.ValidateCodeProcessor;
+import com.haoshuang.sso.demosso.common.validate.validateInterface.ValidateCodeType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.social.connect.web.HttpSessionSessionStrategy;
-import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 

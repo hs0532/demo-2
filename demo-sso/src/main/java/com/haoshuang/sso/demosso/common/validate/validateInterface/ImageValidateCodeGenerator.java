@@ -1,8 +1,8 @@
-package com.haoshuang.sso.demosso.config.ValidateCode.validateInterface;
+package com.haoshuang.sso.demosso.common.validate.validateInterface;
 
-import com.haoshuang.sso.demosso.config.ValidateCode.ImageCode;
-import com.haoshuang.sso.demosso.config.ValidateCode.SecurityProperties;
-import com.haoshuang.sso.demosso.config.ValidateCode.ValidateCode;
+import com.haoshuang.sso.demosso.common.validate.ImageCode;
+import com.haoshuang.sso.demosso.common.validate.ValidateCode;
+import com.haoshuang.sso.demosso.common.validate.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
@@ -47,9 +47,9 @@ public class ImageValidateCodeGenerator implements ValidateCodeGenerator {
 
         graphics.setColor(getRandColor(200 ,250));
         graphics.fillRect(0, 0, width, height);
-        graphics.setFont(new Font("Times New Roman", Font.ITALIC, 20));
-        graphics.setColor(getRandColor(160,200));
-        for(int i=0;i<155;i++) {
+        graphics.setFont(new Font("Times New Roman", Font.ITALIC, 24));
+        graphics.setColor(getRandColor(170,200));
+        for(int i=0;i<80;i++) {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
             int xl = random.nextInt(12);
@@ -61,7 +61,7 @@ public class ImageValidateCodeGenerator implements ValidateCodeGenerator {
         for (int i = 0; i < securityProperties.getCode().getImage().getLength(); i++) {
             String rand = String.valueOf(random.nextInt(10));
             sRand +=rand;
-            graphics.setColor(new Color(20, random.nextInt(110), 20+random.nextInt(110),20+random.nextInt(110)));
+            graphics.setColor(new Color(14+random.nextInt(110), 14+random.nextInt(110),14+random.nextInt(110)));
             graphics.drawString(rand, 13*i+6, 16);
         }
         graphics.dispose();
@@ -78,9 +78,9 @@ public class ImageValidateCodeGenerator implements ValidateCodeGenerator {
         if (bc>255) {
             bc = 255;
         }
-        int r = fc + random.nextInt(bc-fc);
-        int g = fc + random.nextInt(bc - fc);
-        int b = fc + random.nextInt(bc - fc);
+        int r =  random.nextInt(bc - fc+1)+fc;
+        int g =  random.nextInt(bc - fc+1)+fc;
+        int b = random.nextInt(bc - fc+1)+fc;
         return new Color(r, g, b);
     }
 }

@@ -1,6 +1,5 @@
-package com.haoshuang.sso.demosso.config.ValidateCode.ValidateCodeException;
+package com.haoshuang.sso.demosso.common.validate.ValidateCodeException;
 
-import lombok.Data;
 import org.springframework.security.core.AuthenticationException;
 
 public class ValidateCodeException extends AuthenticationException {

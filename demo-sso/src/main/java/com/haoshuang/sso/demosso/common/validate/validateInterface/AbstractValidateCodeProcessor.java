@@ -1,7 +1,7 @@
-package com.haoshuang.sso.demosso.config.ValidateCode.validateInterface;
+package com.haoshuang.sso.demosso.common.validate.validateInterface;
 
-import com.haoshuang.sso.demosso.config.ValidateCode.ValidateCode;
-import com.haoshuang.sso.demosso.config.ValidateCode.ValidateCodeException.ValidateCodeException;
+import com.haoshuang.sso.demosso.common.validate.ValidateCode;
+import com.haoshuang.sso.demosso.common.validate.ValidateCodeException.ValidateCodeException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestBindingException;

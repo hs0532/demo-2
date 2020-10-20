@@ -1,8 +1,8 @@
-package com.haoshuang.sso.demosso.config.ValidateCode;
+package com.haoshuang.sso.demosso.common.validate;
 
-import com.haoshuang.sso.demosso.config.ValidateCode.ValidateCodeException.ValidateCodeException;
-import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.ValidateCodeProcessor;
-import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.ValidateCodeType;
+import com.haoshuang.sso.demosso.common.validate.ValidateCodeException.ValidateCodeException;
+import com.haoshuang.sso.demosso.common.validate.validateInterface.ValidateCodeProcessor;
+import com.haoshuang.sso.demosso.common.validate.validateInterface.ValidateCodeType;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

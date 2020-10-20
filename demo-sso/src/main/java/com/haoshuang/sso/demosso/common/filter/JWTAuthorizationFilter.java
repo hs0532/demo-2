@@ -1,4 +1,4 @@
-package com.haoshuang.sso.demosso.config.filter;
+package com.haoshuang.sso.demosso.common.filter;
 
 import com.haoshuang.sso.demosso.utils.JwtTokenUtil;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,7 +1,5 @@
-package com.haoshuang.sso.demosso.config.filter;
+package com.haoshuang.sso.demosso.common.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.haoshuang.sso.demosso.bean.LoginUser;
 import com.haoshuang.sso.demosso.bean.User;
 import com.haoshuang.sso.demosso.utils.JwtTokenUtil;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

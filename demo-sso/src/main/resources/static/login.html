@@ -5,6 +5,15 @@
 <head>
     <title>Spring Security Example </title>
 </head>
+<script>
+    /**
+     * 点击刷新验证码
+     * @constructor
+     */
+    function Code() {
+        document.getElementById("img").src="code/image?width=100&"+Math.random();
+    }
+</script>
 <body>
 <h2 class="page-header">用户名密码登录</h2>
 <div class="row">
@@ -42,7 +51,7 @@
                             </div>
 
                             <div class="col-sm-1">
-                                <img src="code/image?width=200" onclick="this.src='code/image?width=100'"/>
+                                <img src="code/image?width=100" onclick="Code()" id="img"/>
                             </div>
 
 

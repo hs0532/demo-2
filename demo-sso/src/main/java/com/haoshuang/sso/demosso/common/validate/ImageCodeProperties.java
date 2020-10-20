@@ -1,4 +1,4 @@
-package com.haoshuang.sso.demosso.config.ValidateCode;
+package com.haoshuang.sso.demosso.common.validate;
 
 import lombok.Data;
 

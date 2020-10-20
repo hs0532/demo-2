@@ -1,4 +1,4 @@
-package com.haoshuang.sso.demosso.config.ValidateCode.validateInterface;
+package com.haoshuang.sso.demosso.common.validate.validateInterface;
 
 import org.springframework.web.context.request.ServletWebRequest;
 

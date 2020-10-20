@@ -1,9 +1,7 @@
-package com.haoshuang.sso.demosso.config.ValidateCode.validateInterface;
+package com.haoshuang.sso.demosso.common.validate.validateInterface;
 
 import com.alibaba.druid.util.Base64;
-import com.haoshuang.sso.demosso.config.ValidateCode.ImageCode;
-import com.haoshuang.sso.demosso.config.ValidateCode.validateInterface.AbstractValidateCodeProcessor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import com.haoshuang.sso.demosso.common.validate.ImageCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
