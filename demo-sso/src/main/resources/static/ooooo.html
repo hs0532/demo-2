@@ -4,8 +4,19 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example </title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script>
+
 </head>
 <script>
+
+    $("#submit").click();
+
+    $("#form").load(function(){
+        var text = $(this).contents().find("body").text(); //获取到的是json的字符串
+        var j = $.parseJSON(text);  //json字符串转换成json对象
+        console.log(j)
+        $("#span2").html(JSON.stringify(j));
+    })
     /**
      * 点击刷新验证码
      * @constructor
@@ -21,7 +32,7 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-
+                <span id="span2" ></span>
                 <form action="authentication/form" method="post" class="form-horizontal">
                     <div class="form-group">
                         <label for="username" class="col-sm-3 control-label">Username</label>

@@ -1,13 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script>
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<script>
+
+   function a() {
+        console.log("开始")
+        var token = $("[name='token']").val(); // 注意，jquery筛选一定加引号，否则报错uncaught
+        var fileSize = $("[name='fileName']").val();
+        var fileName = $("[name='fileName']").val();
+        $.ajax({
+            url: "http://192.168.100.222/fs/api/home/GetUploadeFilesToken?token="+token+
+                "&fileSize="+fileSize+"&fileName="+fileName,
+            type: "GET",
+            success: function (res) {  //res是server端响应
+                //response = JSON.parse(res); //将json字符串解析为json对象（即JS对象）
+                console.log(res);
+
+                $("#show").html(JSON.stringify(res));
+            }
+        })
+    }
+
+</script>
 <body>
 <h1>测试资源</h1>
 <div>
-
+        <div class="form-group">
+            <label for="token">token</label>
+            <input type="text" class="form-control" id="token" name="token" required>
+        </div>
+        <div class="form-group">
+            <label for="fileSize">文件大小</label>
+            <input type="text" class="form-control" id="fileSize" name="fileSize" required>
+        </div>
+        <div class="form-group">
+            <label for="fileName">文件名</label>
+            <input type="fileName" class="form-control" id="fileName" name="fileName" required>
+        </div>
+        <p>
+            <button type="button" onclick="a()" class="btn btn-primary btn-block">请求</button>
+        </p>
+    <div>
+        <span id="show"></span>
+    </div>
     aaaaaaaaaaaaawwwwwaaaaaaaa
 </div>
 </body>
