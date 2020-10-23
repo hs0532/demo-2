@@ -1,6 +1,7 @@
 package com.haoshuang.sso.demosso.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.haoshuang.sso.demosso.common.ResultBean;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -15,12 +16,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Component
 @Slf4j
 public class MyFailAuthenticationFailHandler implements AuthenticationFailureHandler {
 
     private Logger logger = LoggerFactory.getLogger(MyFailAuthenticationFailHandler.class);
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -29,10 +35,18 @@ public class MyFailAuthenticationFailHandler implements AuthenticationFailureHan
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         log.info("登陆失败log4j");
         logger.info("登录失败");
-        log.debug("sqq");
         httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         httpServletResponse.setContentType("application/json;charset=UTF-8");
-        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(e));
+        httpServletResponse.setStatus(200);
+        ResultBean resultBean = new ResultBean();
+        resultBean.setCade(1);
+        resultBean.setMsg(e.getMessage());
+        PrintWriter out =  httpServletResponse.getWriter();
+        //.write(objectMapper.writeValueAsString(e));
+        ObjectMapper objectMapper = new ObjectMapper();
+        out.write(objectMapper.writeValueAsString(resultBean));
+        out.flush();
+        out.close();
 
     }
 }

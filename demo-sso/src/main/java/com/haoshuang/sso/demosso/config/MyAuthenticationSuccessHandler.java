@@ -1,6 +1,7 @@
 package com.haoshuang.sso.demosso.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.haoshuang.sso.demosso.common.ResultBean;
 import lombok.extern.log4j.Log4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Component
 @Log4j
@@ -29,7 +31,17 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         logger.info("登录成功");
         // 登录成功后把authentication返回给前台
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(authentication));
+
+        ResultBean resultBean = new ResultBean();
+        resultBean.setCade(0);
+        resultBean.setMsg("登陆成功");
+        PrintWriter out =  response.getWriter();
+        //.write(objectMapper.writeValueAsString(e));
+        ObjectMapper objectMapper = new ObjectMapper();
+        out.write(objectMapper.writeValueAsString(resultBean));
+        out.flush();
+        out.close();
+        //response.getWriter().write(objectMapper.writeValueAsString(authentication));
 
     }
 

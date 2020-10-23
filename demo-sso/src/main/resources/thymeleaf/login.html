@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>登录</title>
-
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script>
     <link  href="/static/css/sb-admin-2.min.css" rel="stylesheet">
     <style>
         .imgcode input{
@@ -33,6 +33,47 @@
             color: #ffffff;
         }
     </style>
+    <script>
+        /**
+         * 点击刷新验证码
+         * @constructor
+         */
+        function Code() {
+            document.getElementById("img").src="code/image?width=100&"+Math.random();
+        }
+        $("#form1").load(function(){
+            var text = $(this).contents().find("body").text(); //获取到的是json的字符串
+            var j = $.parseJSON(text);  //json字符串转换成json对象
+            console.log(j)
+            $("#span2").html(JSON.stringify(j));
+        })
+        function loginA() {
+            console.log("开始")
+            var username = $("[name='username']").val(); // 注意，jquery筛选一定加引号，否则报错uncaught
+            var password = $("[name='password']").val();
+            var imageCode = $("[name='imageCode']").val();
+            $.ajax({
+                url: "authentication/form",
+                type: "POST",
+                data:{
+                    "username" : username,
+                    "password" : password,
+                    "imageCode" : imageCode
+                },
+                success: function (res) {  //res是server端响应
+                    //response = JSON.parse(res); //将json字符串解析为json对象（即JS对象）
+                    console.log(res);
+
+                    $("#show").html(JSON.stringify(res));
+                },
+                error:function (res) {
+                    console.log(res);
+
+                    $("#show").html(JSON.stringify(res));
+                }
+            })
+        }
+    </script>
 </head>
 
 <body class="bg-gradient-primary">
@@ -75,7 +116,7 @@
                                         </div>
                                     </div>
                                     <font color="red"></font>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block" id="loginsubmit" onclick="a()">登录</button>
+                                    <button type="button" class="btn btn-primary btn-user btn-block" id="loginsubmit" onclick="loginA()">登录</button>
                                     <hr>
                                 </form>
                                 <hr>
@@ -89,40 +130,5 @@
         </div>
     </div>
 </div>
-<script>
-    /**
-     * 点击刷新验证码
-     * @constructor
-     */
-    function Code() {
-        document.getElementById("img").src="code/image?width=100&"+Math.random();
-    }
-    $("#form1").load(function(){
-        var text = $(this).contents().find("body").text(); //获取到的是json的字符串
-        var j = $.parseJSON(text);  //json字符串转换成json对象
-        console.log(j)
-        $("#span2").html(JSON.stringify(j));
-    })
-    function a() {
-        console.log("开始")
-        var username = $("[name='uername']").val(); // 注意，jquery筛选一定加引号，否则报错uncaught
-        var password = $("[name='password']").val();
-        var imageCode = $("[name='imageCode']").val();
-        $.ajax({
-            url: "authentication/form",
-            type: "POST",
-            data:{
-               "username" : username,
-               "password" : password,
-                "imageCode" : imageCode
-            },
-            success: function (res) {  //res是server端响应
-                //response = JSON.parse(res); //将json字符串解析为json对象（即JS对象）
-                console.log(res);
 
-                $("#show").html(JSON.stringify(res));
-            }
-        })
-    }
-</script>
 </body></html>
