@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
@@ -36,6 +39,14 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         resultBean.setCade(0);
         resultBean.setMsg("登陆成功");
         PrintWriter out =  response.getWriter();
+        RequestCache requestCache = new HttpSessionRequestCache();
+        SavedRequest savedRequest = requestCache.getRequest(request,response);
+        if(savedRequest!=null){
+            String url = savedRequest.getRedirectUrl();
+            response.sendRedirect(url);
+            resultBean.setData(url);
+        }
+
         //.write(objectMapper.writeValueAsString(e));
         ObjectMapper objectMapper = new ObjectMapper();
         out.write(objectMapper.writeValueAsString(resultBean));

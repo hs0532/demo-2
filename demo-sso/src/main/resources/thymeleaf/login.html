@@ -29,7 +29,7 @@
             border-top-right-radius: 27px;
             border-bottom-right-radius:27px;
             line-height: 34px;
-            background-color: red;
+            background-color: #ff0000;
             color: #ffffff;
         }
     </style>
@@ -40,13 +40,9 @@
          */
         function Code() {
             document.getElementById("img").src="code/image?width=100&"+Math.random();
+            $("#show").html("");
         }
-        $("#form1").load(function(){
-            var text = $(this).contents().find("body").text(); //获取到的是json的字符串
-            var j = $.parseJSON(text);  //json字符串转换成json对象
-            console.log(j)
-            $("#span2").html(JSON.stringify(j));
-        })
+
         function loginA() {
             console.log("开始")
             var username = $("[name='username']").val(); // 注意，jquery筛选一定加引号，否则报错uncaught
@@ -63,13 +59,14 @@
                 success: function (res) {  //res是server端响应
                     //response = JSON.parse(res); //将json字符串解析为json对象（即JS对象）
                     console.log(res);
+                    console.log(res.msg)
 
-                    $("#show").html(JSON.stringify(res));
+                    $("#show").html(res.msg);
                 },
                 error:function (res) {
                     console.log(res);
 
-                    $("#show").html(JSON.stringify(res));
+                    $("#show").html(res.msg);
                 }
             })
         }
@@ -109,11 +106,15 @@
                                             <!--<span class="test" href="code/image?width=100" onclick="Code" id="ing"/>-->
                                            <img class="test" src="code/image?width=100" onclick="Code()" id="img"/>
                                         </div>
+
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
                                             <input type="checkbox" class="custom-control-input" id="customCheck">
                                             <label class="custom-control-label" for="customCheck">Remember Me</label>
                                         </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span id="show"/>
                                     </div>
                                     <font color="red"></font>
                                     <button type="button" class="btn btn-primary btn-user btn-block" id="loginsubmit" onclick="loginA()">登录</button>

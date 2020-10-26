@@ -27,6 +27,38 @@ public class ResultBean<C> implements Serializable {
     public ResultBean(int cade) {
         this.cade = cade;
     }
+    public static <T> ResultBean<T> createBySuccess(){
+        return new ResultBean<T>(ResultEnm.SUCCESS.getCode());
+    }
 
+    public static <T> ResultBean<T> createBySuccess(String msg){
+        return new ResultBean<T>(ResultEnm.SUCCESS.getCode(),msg);
+    }
+
+//    public static <T> ResultBean<T> createBySuccess(T data){
+//        return new ResultBean<T>(ResponseCode.SUCCESS.getCode(),data);
+//    }
+//
+//    public static <T> ServerResponse<T> createBySuccess(String msg,T data){
+//        return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),msg,data);
+//    }
+//
+//    public static <T> ServerResponse<T> createByError(String msg,T data){
+//        return new ServerResponse<T>(ResponseCode.ERROR.getCode(),msg,data);
+//    }
+//
+//
+//    public static <T> ServerResponse<T> createByError(){
+//        return new ServerResponse<T>(ResponseCode.ERROR.getCode(),ResponseCode.ERROR.getDesc());
+//    }
+
+
+    public static <T> ResultBean<T> createByError(String errorMessage){
+        return new ResultBean<T>(ResultEnm.ERROR.getCode(),errorMessage);
+    }
+
+    public static <T> ResultBean<T> createByErrorCodeMessage(int errorCode,String errorMessage){
+        return new ResultBean<T>(errorCode,errorMessage);
+    }
 
 }

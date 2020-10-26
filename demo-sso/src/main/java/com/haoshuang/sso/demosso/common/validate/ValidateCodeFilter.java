@@ -30,7 +30,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     // 在初始化本类的地方进行注入
     // 一般在配置security http的地方进行添加过滤器
     @Autowired
-    private MyFailAuthenticationFailHandler failureHandler;
+    private CodeFailException failureHandler;
 
     @Autowired
     ValidateCodeProcessorHolder validateCodeProcessorHolder;
