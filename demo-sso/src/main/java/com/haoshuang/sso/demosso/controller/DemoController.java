@@ -10,4 +10,9 @@ public class DemoController {
     public String test(){
         return "test";
     }
+
+    @RequestMapping("slip")
+    public String slipvalidate(){
+        return "slipvalidate";
+    }
 }

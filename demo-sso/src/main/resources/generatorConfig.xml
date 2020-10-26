@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <classPathEntry
+            location="/Users/haoshuang/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar"/>
+    <context id="my" targetRuntime="MyBatis3">
+      <property name="beginningDelimiter" value="&quot;"/>
+      <property name="endingDelimiter" value="&quot;"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <plugin type="com.softwareloop.mybatis.generator.plugins.LombokPlugin">
+
+            <property name="accessors" value="true"/>
+            <!-- annotation's option(array of String) -->
+            <property name="accessors.prefix" value="m_, _"/>
+
+            <!-- disable annotations -->
+            <property name="allArgsConstructor" value="false"/>
+        </plugin>
+      <commentGenerator>
+        <property name="suppressAllComments" value="true" />
+      </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://101.200.169.63:3306/demo_db?characterEncoding=utf8&amp;serverTimezone=UTC&amp;useSSL=false"
+                        userId="root"
+                        password="Aa1010..."
+        />
+
+        <javaModelGenerator targetPackage="com.haoshuang.sso.demosso.bean"
+                            targetProject="../demo-2/src/main/java/">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+      <sqlMapGenerator targetPackage="mybatis.dmsMapper"
+                       targetProject="../demo-2/src/main/resources/">
+        <property name="enableSubPackages" value="false" />
+      </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.haoshuang.sso.demosso.Mapper"
+                             targetProject="src/main/java/" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <table schema="public" tableName="sys_user_role" >
+        </table>
+
+    </context>
+</generatorConfiguration>

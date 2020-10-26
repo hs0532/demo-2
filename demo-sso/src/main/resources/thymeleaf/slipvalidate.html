@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>xxxxxxx</title>
+    <!-- For IE top version load-->
+    <!-- 双核浏览器条件下 默认用极速核 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <script src="https://cdn.adactive.top/static/activity/zartist/js/extra/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.adactive.top/static/activity/zartist/js/common/remset.js"></script>
+    <script src="https://cdn.adactive.top/static/activity/zartist/js/common/dialog.js"></script>
+    <script src="https://cdn.adactive.top/static/activity/zartist/js/extra/swiper-4.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.adactive.top/static/activity/zartist/css/common/reactui.css?v=2.0"
+          type="text/css">
+    <link rel="stylesheet" href="https://cdn.adactive.top/static/activity/zartist/css/common/common.css?v=2.0"
+          type="text/css">
+    <link rel="stylesheet" href="https://cdn.adactive.top/static/activity/zartist/css/common/dialog.css?v=2.0"
+          type="text/css">
+    <link rel="stylesheet" href="https://cdn.adactive.top/static/activity/zartist/css/extra/swiper-4.4.1.min.css"
+          type="text/css">
+    <link rel="stylesheet" href="/static/css/tecent.css" type="text/css">
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/layui.js"></script>
+    <script src="/static/js/layui.all.js"></script>
+
+    <script src="/static/js/check_verify.js"></script>
+    <link rel="stylesheet" href="/static/css/layui.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/submit.css">
+    <link rel="stylesheet" href="/static/css/checkStyle.css" type="text/css">
+
+
+
+
+</head>
+
+<body style="margin: 0 auto !important">
+<div class='main'>
+    <div class="main-extra">
+        <div class="main-instr insert_area">
+            <!-- input框 -->
+            <div class="main-list-con input-control" style="margin-left: 0.5rem;">
+                <input id="user_mobile" name="USERMOBILE" placeholder="请输入手机号或宽带号" class="main-list-con-input"
+                       maxlength="32" oninput="clearNum(this)" required="required">
+            </div>
+        </div>
+
+        <div class="main-instr">
+            <!--点击区域-->
+            <!--随便调用一下好了，检查手机号是否合法，合法就调用滑动验证码出来咯-->
+            <p><img onclick="layerVerifyCodeImg()" src="images/check_phone_02.png"></p>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
