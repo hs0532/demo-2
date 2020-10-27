@@ -41,7 +41,7 @@ public class PageData extends JSONObject {
             } else {
                 value = valueObj.toString();
             }
-            if (!"_".equals(name)) {    //解决一些特殊字符冲突，用了base64解密
+            if ("_".equals(name)) {    //解决一些特殊字符冲突，用了base64解密
                 returnMap.put(name, DigestUtilEZ.digestString(value, DigestUtilEZ.ALGORITHM_NAME.Decode_BASE_64));
             } else {
                 returnMap.put(name, value);    //无字符冲突 且明文传输情况

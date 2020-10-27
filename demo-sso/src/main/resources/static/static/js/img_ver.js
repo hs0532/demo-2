@@ -181,7 +181,7 @@ function imgVer(Config) {
 function CheckResult_VerifyButton(moveEnd_X,wbili,Config) {
     $.ajax({
         url: "/check/rstImgSwipe",
-        data: { moveEnd_X: encode(moveEnd_X), wbili: encode(wbili) },
+        data: { moveEnd_X:  moveEnd_X, wbili: wbili },
         type: "POST",
         cache: false,
         success: function (data) {

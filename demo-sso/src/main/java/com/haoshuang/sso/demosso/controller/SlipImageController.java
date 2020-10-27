@@ -3,6 +3,7 @@ package com.haoshuang.sso.demosso.controller;
 import com.haoshuang.sso.demosso.common.validate.ValidateCodeBean.PageData;
 import com.haoshuang.sso.demosso.common.validate.ValidateCodeBean.VerifyImageCode;
 import com.haoshuang.sso.demosso.common.validate.validateInterface.SlipImageValidateCodeGenerator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 @Controller
 @RequestMapping(value = "/check")
-public class SlipImageController extends BaseController{
+public class SlipImageController extends BaseController {
 
     @Autowired
     SlipImageValidateCodeGenerator verifyImageUtil;
@@ -39,10 +41,13 @@ public class SlipImageController extends BaseController{
             File file = new File(path);
             File[] files = file.listFiles();
 
-            index = ran.nextInt(files.length - 1);    //随机下标
-            System.out.println(files[index].getPath());
-
-            VerifyImageCode img = verifyImageUtil.getVerifyImage(files[index].getPath());
+            String urlRan = "";
+            do {
+                index = ran.nextInt(files.length - 1);
+                urlRan = files[index].getPath();
+                System.out.println(files[index].getPath());
+            } while (!checkPic(urlRan));
+            VerifyImageCode img = verifyImageUtil.getVerifyImage(urlRan);
             pd.put("SrcImage", img.getSrcImage());
             pd.put("CutImage", img.getCutImage());
 //			pd.put("XPosition",img.getXPosition());
@@ -56,6 +61,24 @@ public class SlipImageController extends BaseController{
             e.printStackTrace();
         }
         return pd;
+    }
+
+    private boolean checkPic(String image) {
+        boolean flag = false;
+        String[] strs = new String[]{
+                ".jpg", ".bmp", ".jpeg", ".png", ".gif",
+                ".JPG", ".BMP", ".JPEG", ".PNG", ".GIF"
+        };
+        if (StringUtils.isNotBlank(image)) {
+            for (String str : strs
+            ) {
+                if (image.endsWith(str)) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
 
     //返回前端滑动验证码参数
