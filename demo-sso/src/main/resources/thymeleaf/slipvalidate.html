@@ -39,21 +39,21 @@
 
 </head>
 
-<body style="margin: 0 auto !important">
+<body style="margin: 0 auto !important" onload="layerVerifyCodeImg()">
 <div class='main'>
     <div class="main-extra">
         <div class="main-instr insert_area">
             <!-- input框 -->
-            <div class="main-list-con input-control" style="margin-left: 0.5rem;">
+           <!-- <div class="main-list-con input-control" style="margin-left: 0.5rem;">
                 <input id="user_mobile" name="USERMOBILE" placeholder="请输入手机号或宽带号" class="main-list-con-input"
                        maxlength="32" oninput="clearNum(this)" required="required">
-            </div>
+            </div>-->
         </div>
 
         <div class="main-instr">
             <!--点击区域-->
             <!--随便调用一下好了，检查手机号是否合法，合法就调用滑动验证码出来咯-->
-            <p><img onclick="layerVerifyCodeImg()" src="images/check_phone_02.png"></p>
+            <!--<p><img onclick="layerVerifyCodeImg()" src="images/check_phone_02.png"></p>-->
         </div>
     </div>
 </div>

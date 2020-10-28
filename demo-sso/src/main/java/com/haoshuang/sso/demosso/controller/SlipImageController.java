@@ -38,18 +38,16 @@ public class SlipImageController extends BaseController {
             session.setAttribute("imgSwipeSuccess", "false");
             //随机获取verifyImages文件夹下的某一张图片
             String url = this.getClass().getResource("/").toString().substring(5);
-            String resources = "/root/java/pic";
-            path =  resources;
+            String resources = "/static/static/img/verifyImages";
+            path = url + resources;
             File file = new File(path);
             File[] files = file.listFiles();
-            log.info("文件路径 ："+path);
-            log.info("files长度 文件数 ："+files.length);
+            log.info(path);
             String urlRan = "";
             do {
                 index = ran.nextInt(files.length - 1);
                 urlRan = files[index].getPath();
                 System.out.println(files[index].getPath());
-
             } while (!checkPic(urlRan));
             VerifyImageCode img = verifyImageUtil.getVerifyImage(urlRan);
             pd.put("SrcImage", img.getSrcImage());

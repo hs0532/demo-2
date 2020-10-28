@@ -3,6 +3,7 @@ package com.haoshuang.sso.demosso.common.validate.validateInterface;
 import com.haoshuang.sso.demosso.common.validate.ValidateCodeBean.VerifyImageCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
+import sun.awt.image.BufferedImageGraphicsConfig;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -61,8 +62,8 @@ public class SlipImageValidateCodeGenerator implements ValidateCodeGenerator {
     public VerifyImageCode getVerifyImage(String filePath) throws IOException {
         BufferedImage srcImage = ImageIO.read(new File(filePath));
 
-        int locationX = CUT_WIDTH + new Random().nextInt(srcImage.getWidth() - CUT_WIDTH * 3);
-        int locationY = CUT_HEIGHT + new Random().nextInt(srcImage.getHeight() - CUT_HEIGHT) / 2;
+        int locationX = CUT_WIDTH + new Random().nextInt(srcImage.getWidth() - CUT_WIDTH * 2);
+        int locationY = CUT_HEIGHT + new Random().nextInt(srcImage.getHeight() - CUT_HEIGHT) / 5;
         BufferedImage markImage = new BufferedImage(CUT_WIDTH,CUT_HEIGHT,BufferedImage.TYPE_4BYTE_ABGR);
         int[][] data = getBlockData();
         cutImgByTemplate(srcImage, markImage, data, locationX, locationY);
@@ -163,6 +164,7 @@ public class SlipImageValidateCodeGenerator implements ValidateCodeGenerator {
      * @param y           裁剪点y
      */
     private  void cutImgByTemplate(BufferedImage oriImage, BufferedImage targetImage, int[][] blockImage, int x, int y) {
+        int alpha =180;
         for (int i = 0; i < CUT_WIDTH; i++) {
             for (int j = 0; j < CUT_HEIGHT; j++) {
                 int _x = x + i;
@@ -174,17 +176,35 @@ public class SlipImageValidateCodeGenerator implements ValidateCodeGenerator {
                     //抠图上复制对应颜色值
                     targetImage.setRGB(i,j, rgb_ori);
                     //原图对应位置颜色变化
-                    oriImage.setRGB(_x, _y, Color.LIGHT_GRAY.getRGB());
+
+                    /***颜色渐变尝试****/
+                    //int r = (0xff&rgb_ori);
+                    //int g = (0xff&(rgb_ori>>8));
+                   // int b = (0xff&(rgb_ori>>16));
+                   // oriImage.setRGB(_x, _y, r+(g<<8)+(b<<16)+(200<<24));
+                    /****
+                     * 第二次尝试
+                     */
+                    oriImage.setRGB(_x, _y, rgb_ori&0x36fff0ff);
                 } else if (rgbFlg == 2) {
                     targetImage.setRGB(i, j, Color.WHITE.getRGB());
-                    oriImage.setRGB(_x, _y, Color.GRAY.getRGB());
+
+                    oriImage.setRGB(_x, _y, Color.WHITE.getRGB());
                 }else if(rgbFlg == 0){
-                    //int alpha = 0;
                     targetImage.setRGB(i, j, rgb_ori & 0x00ffffff);
                 }
             }
 
         }
+    }
+    public static boolean colorInRange(int color){
+        int red = (color&0xff0000)>>16;
+        int green = (color&0x00ff00)>>8;
+        int blue = (color&0x0000ff);
+        if(red>=230&&green>=230&&blue>=230){
+            return true;
+        }
+        return false;
     }
     /**
      * 随机获取一张图片对象

@@ -39,7 +39,7 @@ function layerVerifyCodeImg(userPhone){
         offset: 'auto',
         height:'200px',
         type: 1,
-        title: '图形验证',
+        title: '',
 
         content:
             '<div class="verBox" style="height: 220px;width: 300px;text-align:center">'

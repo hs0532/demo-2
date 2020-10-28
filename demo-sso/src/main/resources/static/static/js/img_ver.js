@@ -190,8 +190,8 @@ function CheckResult_VerifyButton(moveEnd_X,wbili,Config) {
                 //    console.log(data);
                 $(".ver-tips").html('<i style="background-position:-4px -1207px;"></i><span style="color:#42ca6b;">验证通过</span><span></span>');
                 $(".ver-tips").addClass("slider-tips");
-                $(".puzzle-lost-box").addClass("hidden");
-                $("#puzzleBox").addClass("hidden");
+               // $(".puzzle-lost-box").addClass("hidden");
+              //  $("#puzzleBox").addClass("hidden");
                 setTimeout(function () {
                     $(".ver-tips").removeClass("slider-tips");
                     imgVer(Config);
