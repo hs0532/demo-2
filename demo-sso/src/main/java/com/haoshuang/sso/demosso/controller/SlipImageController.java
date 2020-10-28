@@ -3,6 +3,7 @@ package com.haoshuang.sso.demosso.controller;
 import com.haoshuang.sso.demosso.common.validate.ValidateCodeBean.PageData;
 import com.haoshuang.sso.demosso.common.validate.ValidateCodeBean.VerifyImageCode;
 import com.haoshuang.sso.demosso.common.validate.validateInterface.SlipImageValidateCodeGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import java.util.Random;
 
 @Controller
 @RequestMapping(value = "/check")
+@Slf4j
 public class SlipImageController extends BaseController {
 
     @Autowired
@@ -36,16 +38,18 @@ public class SlipImageController extends BaseController {
             session.setAttribute("imgSwipeSuccess", "false");
             //随机获取verifyImages文件夹下的某一张图片
             String url = this.getClass().getResource("/").toString().substring(5);
-            String resources = "/static/static/img/verifyImages";
-            path = url + resources;
+            String resources = "/root/java/pic";
+            path =  resources;
             File file = new File(path);
             File[] files = file.listFiles();
-
+            log.info("文件路径 ："+path);
+            log.info("files长度 文件数 ："+files.length);
             String urlRan = "";
             do {
                 index = ran.nextInt(files.length - 1);
                 urlRan = files[index].getPath();
                 System.out.println(files[index].getPath());
+
             } while (!checkPic(urlRan));
             VerifyImageCode img = verifyImageUtil.getVerifyImage(urlRan);
             pd.put("SrcImage", img.getSrcImage());
