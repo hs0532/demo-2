@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Random;
 
 @Controller
@@ -38,8 +37,9 @@ public class SlipImageController extends BaseController {
             session.setAttribute("imgSwipeSuccess", "false");
             //随机获取verifyImages文件夹下的某一张图片
             String url = this.getClass().getResource("/").toString().substring(5);
-            String resources = "/static/static/img/verifyImages";
-            path = url + resources;
+           // String resources = "/static/static/img/verifyImages";
+           // path = url + resources;
+            path  = "/root/java/pic";
             File file = new File(path);
             File[] files = file.listFiles();
             log.info(path);

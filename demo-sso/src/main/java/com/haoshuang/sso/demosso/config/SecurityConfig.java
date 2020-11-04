@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(myFailAuthenticationFailHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login","/register","/static/**","/css/**","/code/image","/check/*","/demo/*").permitAll()//过滤不需要拦截认证的资源
+                .antMatchers("/login","/register","/static/**","/css/**","/code/image","/check/*").permitAll()//过滤不需要拦截认证的资源
                 .anyRequest()
                 .authenticated()
                 .and()
