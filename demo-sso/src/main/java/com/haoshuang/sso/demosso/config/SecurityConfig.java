@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/code/image");
+        web.ignoring().antMatchers("/api/code/image");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(myFailAuthenticationFailHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login","/register","/static/**","/css/**","/code/image","/check/*").permitAll()//过滤不需要拦截认证的资源
+                .antMatchers("/login","/register","/static/**","/css/**","/code/image","/api/check/*").permitAll()//过滤不需要拦截认证的资源
                 .anyRequest()
                 .authenticated()
                 .and()
