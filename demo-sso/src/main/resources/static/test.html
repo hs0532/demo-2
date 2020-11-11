@@ -20,7 +20,7 @@
             success: function (res) {  //res是server端响应
                 //response = JSON.parse(res); //将json字符串解析为json对象（即JS对象）
                 console.log(res);
-
+                location.href = "../user"
                 $("#show").html(JSON.stringify(res));
             }
         })

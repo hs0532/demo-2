@@ -15,4 +15,9 @@ public class DemoController {
     public String slipvalidate(){
         return "slipvalidate";
     }
+
+    @RequestMapping("index")
+    public String index(){
+        return "index";
+    }
 }

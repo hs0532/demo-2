@@ -30,7 +30,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     private ObjectMapper objectMapper;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         logger.info("登录成功");
         // 登录成功后把authentication返回给前台
         response.setContentType("application/json;charset=UTF-8");
@@ -38,7 +38,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         ResultBean resultBean = new ResultBean();
         resultBean.setCade(0);
         resultBean.setMsg("登陆成功");
-        PrintWriter out =  response.getWriter();
+        PrintWriter out = response.getWriter();
         RequestCache requestCache = new HttpSessionRequestCache();
         SavedRequest savedRequest = requestCache.getRequest(request,response);
         if(savedRequest!=null){
@@ -56,8 +56,5 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
     }
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
 
-    }
 }
