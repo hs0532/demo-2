@@ -7,7 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
 /**
- * JWT工具类
+ * JWT工具类w
  */
 public class JwtTokenUtil {
     /**
