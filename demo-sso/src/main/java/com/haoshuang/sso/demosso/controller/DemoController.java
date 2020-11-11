@@ -3,6 +3,9 @@ package com.haoshuang.sso.demosso.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * 啊啊啊啊啊啊啊
+ */
 @Controller
 @RequestMapping("demo")
 public class DemoController {
