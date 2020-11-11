@@ -10,7 +10,9 @@ import java.util.Date;
  * JWT工具类
  */
 public class JwtTokenUtil {
-
+    /**
+     * wwww
+     */
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
 
