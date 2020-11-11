@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class JwtTokenUtil {
     /**
-     * wwwweaaaaaaaaa
+     * wwwweeeeeeeeee
      */
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
