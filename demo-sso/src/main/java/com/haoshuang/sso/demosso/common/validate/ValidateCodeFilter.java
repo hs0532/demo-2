@@ -47,7 +47,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         /**
          * 此处地址可又配置文件读取
          */
-        urlMap.put("/authentication/form",ValidateCodeType.IMAGE);
+        urlMap.put("/api/authentication/form",ValidateCodeType.IMAGE);
         addUrlToMap(securityProperties.getCode().getImage().getUrl(),ValidateCodeType.IMAGE);
     }
 
@@ -83,7 +83,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
      */
     private ValidateCodeType getValidateCodeType(HttpServletRequest request){
         ValidateCodeType type = null;
-        if(StringUtils.endsWithIgnoreCase(request.getMethod(),"post")){
+        if(StringUtils.endsWithIgnoreCase(request.getMethod(),"POST")){
             Set<String> urls = urlMap.keySet();
             for (String url:urls){
                 if(pathMatcher.match(url,request.getRequestURI())){

@@ -58,7 +58,10 @@ public class MyFailAuthenticationFailHandler implements AuthenticationFailureHan
             log.info("用户登录失败，失败原因{}",e.toString());
         }
 
-        httpServletResponse.setStatus(200);
+        httpServletResponse.setStatus(302);
+      //  httpServletResponse.sendError(302,reson);
+
+        //httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
         ResultBean resultBean = new ResultBean();
         resultBean.setCade(1);
         resultBean.setMsg(reson);

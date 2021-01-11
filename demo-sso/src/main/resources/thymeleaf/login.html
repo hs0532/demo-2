@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,37 +43,7 @@
             $("#show").html("");
         }
 
-        function loginA() {
-            console.log("开始")
-            var username = $("[name='username']").val(); // 注意，jquery筛选一定加引号，否则报错uncaught
-            var password = $("[name='password']").val();
-            var imageCode = $("[name='imageCode']").val();
-            $.ajax({
-                url: "/api/authentication/form",
-                type: "POST",
-                data:{
-                    "username" : username,
-                    "password" : password,
-                    "imageCode" : imageCode
-                },
-                success: function (res) {  //res是server端响应
-                    //response = JSON.parse(res); //将json字符串解析为json对象（即JS对象）
-                    console.log(res);
-                    console.log(res.msg);
-                    //window.location.href=document.referrer;
-                   if(0==res.cade){
-                        location.href = "../demo/index";
-                    }
 
-                    $("#show").html(res.msg);
-                },
-                error:function (res) {
-                    console.log(res);
-
-                    $("#show").html(res.msg);
-                }
-            })
-        }
     </script>
 </head>
 
@@ -97,7 +67,9 @@
                                     <h1 class="h4 text-gray-900 mb-4">欢迎回来!</h1>
                                 </div>
                                 <form class="user" action="authentication/form" method="post" id="form">
-                                    <div class="form-group">
+
+
+                                <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="请输入账号">
                                     </div>
                                     <div class="form-group">
@@ -108,21 +80,21 @@
                                             <input type="text" name="imageCode" id="imageCode" value="" placeholder="请输入验证码"
                                                    class="form-control form-control-user"/>
                                             <!--<span class="test" href="code/image?width=100" onclick="Code" id="ing"/>-->
-                                           <img class="test" src="/api/code/image?width=100" onclick="Code()" id="img"/>
-                                        </div>
+                                 <img class="test" src="/api/code/image?width=100" onclick="Code()" id="img"/>
+                             </div>
 
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck">
-                                            <label class="custom-control-label" for="customCheck">Remember Me</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <span id="show"/>
-                                    </div>
-                                    <font color="red"></font>
-                                    <button type="button" class="btn btn-primary btn-user btn-block" id="loginsubmit" onclick="loginA()">登录</button>
-                                    <hr>
+                         <div class="form-group">
+                             <div class="custom-control custom-checkbox small">
+                                 <input type="checkbox" class="custom-control-input" id="customCheck">
+                                 <label class="custom-control-label" for="customCheck">Remember Me</label>
+                             </div>
+                         </div>
+                         <div class="form-group">
+                             <span id="show"/>
+                         </div>
+                         <font color="red"></font>
+                         <button type="submit" class="btn btn-primary btn-user btn-block" >登录</button>
+                                    <p style="color: #ff0000" th:if="${param.error}">用户名或密码错误</p>
                                 </form>
                                 <hr>
                                 <div class="text-center">

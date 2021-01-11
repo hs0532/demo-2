@@ -45,8 +45,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             String url = savedRequest.getRedirectUrl();
             response.sendRedirect(url);
             resultBean.setData(url);
-        }
-
+        }/*else{
+            request.getRequestDispatcher("/api/demo/index").forward(request, response);
+        }*/
+        resultBean.setData(authentication);
         //.write(objectMapper.writeValueAsString(e));
         ObjectMapper objectMapper = new ObjectMapper();
         out.write(objectMapper.writeValueAsString(resultBean));
