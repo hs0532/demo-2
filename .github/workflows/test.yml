@@ -14,10 +14,10 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: cd dcitory
-        run: cd demo-sso
       - name: Build with Maven
-        run: mvn  --batch-mode --update-snapshots verify
+        run: |
+          cd demo-sso
+          mvn  --batch-mode --update-snapshots verify
           
     
     
