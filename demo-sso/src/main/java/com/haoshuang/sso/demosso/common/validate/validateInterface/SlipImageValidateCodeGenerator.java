@@ -4,8 +4,8 @@ import com.haoshuang.sso.demosso.common.validate.ValidateCodeBean.VerifyImageCod
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 import sun.awt.image.BufferedImageGraphicsConfig;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+
+import java.util.Base64;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -253,7 +253,7 @@ public class SlipImageValidateCodeGenerator implements ValidateCodeGenerator {
         ImageIO.write(image,"png",out);
         //转成byte数组
         byte[] bytes = out.toByteArray();
-        BASE64Encoder encoder = new BASE64Encoder();
+        Base64.Encoder encoder = Base64.getMimeEncoder();
         //生成BASE64编码
         //String showBase64 = encoder.encode(bytes);
 
@@ -269,8 +269,8 @@ public class SlipImageValidateCodeGenerator implements ValidateCodeGenerator {
      */
     public static BufferedImage base64StringToImage(String base64String) {
         try {
-            BASE64Decoder decoder=new BASE64Decoder();
-            byte[] bytes1 = decoder.decodeBuffer(base64String);
+            Base64.Decoder decoder=Base64.getMimeDecoder();
+            byte[] bytes1 = decoder.decode(base64String);
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes1);
             return ImageIO.read(byteArrayInputStream);
         } catch (IOException e) {
