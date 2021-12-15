@@ -16,7 +16,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
     - run: mvn --batch-mode --update-snapshots verify -Dmaven.test.skip=true
-    - run: mkdir staging && cp target/*.jar staging
+    - run: mkdir staging && cp demo-sso/target/*.jar staging
     - uses: actions/upload-artifact@v2
       with:
           name: Package
