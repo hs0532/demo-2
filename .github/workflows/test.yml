@@ -4,6 +4,8 @@ author: 'Eric Lam'
 branding:
   icon: 'package'
   color: 'blue'
+  
+on: push
 
 inputs:
   java-version:
